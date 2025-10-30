@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Snowy Whispers of the Moon</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Source+Code+Pro&display=swap" rel="stylesheet">
+  <style>
+    body {
+      margin: 0;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      background: radial-gradient(circle at top, #dbe8ff 0%, #1a1a2e 80%);
+      color: #e6f0ff;
+      font-family: 'Playfair Display', serif;
+      text-align: center;
+      overflow: hidden;
+    }
+
+    h1 {
+      font-size: 2.2rem;
+      letter-spacing: 1px;
+      margin-bottom: 1rem;
+      text-shadow: 0 0 12px rgba(255, 255, 255, 0.4);
+    }
+
+    p {
+      font-size: 1.1rem;
+      color: #cdd9ff;
+      margin-bottom: 1.5rem;
+    }
+
+    input {
+      background: rgba(255, 255, 255, 0.1);
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      color: #fff;
+      padding: 0.6rem 1rem;
+      border-radius: 8px;
+      font-size: 1rem;
+      outline: none;
+      width: 220px;
+      font-family: 'Source Code Pro', monospace;
+      text-align: center;
+    }
+
+    button {
+      background: rgba(255, 255, 255, 0.2);
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      color: #fff;
+      padding: 0.6rem 1rem;
+      border-radius: 8px;
+      font-family: 'Source Code Pro', monospace;
+      font-size: 1rem;
+      cursor: pointer;
+      margin-left: 0.5rem;
+      transition: background 0.3s ease;
+    }
+
+    button:hover {
+      background: rgba(255, 255, 255, 0.35);
+    }
+
+    .snowflake {
+      position: absolute;
+      top: 0;
+      background: white;
+      border-radius: 50%;
+      opacity: 0.8;
+      animation: fall linear infinite;
+    }
+
+    @keyframes fall {
+      to {
+        transform: translateY(100vh);
+        opacity: 0;
+      }
+    }
+  </style>
+</head>
+<body>
+  <h1>Snowy Whispers of the Moon</h1>
+  <p>Enter the secret key to awaken the whispers...</p>
+
+  <div>
+    <input type="password" id="passwordInput" placeholder="enter password..." />
+    <button onclick="checkPassword()">Unlock</button>
+  </div>
+
+  <script>
+    // ❄️ Simple snowfall effect
+    const numSnowflakes = 40;
+    for (let i = 0; i < numSnowflakes; i++) {
+      const snowflake = document.createElement("div");
+      snowflake.classList.add("snowflake");
+      const size = Math.random() * 5 + 2;
+      snowflake.style.width = `${size}px`;
+      snowflake.style.height = `${size}px`;
+      snowflake.style.left = `${Math.random() * 100}vw`;
+      snowflake.style.animationDuration = `${5 + Math.random() * 10}s`;
+      snowflake.style.animationDelay = `${Math.random() * 5}s`;
+      document.body.appendChild(snowflake);
+    }
+
+    // 🌙 Password check using SHA-256 hash
+    async function checkPassword() {
+      const input = document.getElementById('passwordInput').value;
+      const encoder = new TextEncoder();
+      const data = encoder.encode(input);
+      const hashBuffer = await crypto.subtle.digest('SHA-256', data);
+      const hashArray = Array.from(new Uint8Array(hashBuffer));
+      const hashHex = hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
+
+      // 🔑 Replace this hash with your own generated password hash
+      const correctHash = '083e9cbc801dbb21f42cbe6ce97c2e845eee2dcd2168b605b6f930df8055778a';
+
+      if (hashHex === correctHash) {
+        window.location.href = "calendar.html"; // redirect to your main page
+      } else {
+        alert("The moon remains silent... try again.");
+      }
+    }
+  </script>
+</body>
+</html>
