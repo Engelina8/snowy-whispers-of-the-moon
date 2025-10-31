@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Snowy Whispers of the Moon — Calendar</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Source+Code+Pro&display=swap" rel="stylesheet">
+  <style>
+    body {
+      margin: 0;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      background: radial-gradient(circle at top, #b8c9ff 0%, #0e1633 80%);
+      color: #f0f6ff;
+      font-family: 'Playfair Display', serif;
+      text-align: center;
+      overflow: hidden;
+    }
+
+    h1 {
+      font-size: 2rem;
+      margin-bottom: 1rem;
+      text-shadow: 0 0 12px rgba(255, 255, 255, 0.5);
+    }
+
+    #calendar {
+      display: grid;
+      grid-template-columns: repeat(7, 70px);
+      grid-gap: 12px;
+      justify-content: center;
+    }
+
+    .door {
+      width: 70px;
+      height: 70px;
+      background: rgba(255, 255, 255, 0.1);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Source Code Pro', monospace;
+      font-size: 1.2rem;
+      color: #dbe4ff;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      box-shadow: 0 0 10px rgba(255, 255, 255, 0.15);
+    }
+
+    .door:hover {
+      background: rgba(255, 255, 255, 0.25);
+      transform: translateY(-3px);
+      box-shadow: 0 0 18px rgba(255, 255, 255, 0.4);
+    }
+
+    .door.locked {
+      opacity: 0.4;
+      cursor: not-allowed;
+      filter: grayscale(80%);
+    }
+
+    p {
+      color: #b6c6ff;
+      font-size: 1rem;
+      margin-top: 1.2rem;
+    }
+
+    /* ❄️ Snowflakes again */
+    .snowflake {
+      position: absolute;
+      top: 0;
+      background: white;
+      border-radius: 50%;
+      opacity: 0.8;
+      animation: fall linear infinite;
+      z-index: 0;
+    }
+
+    @keyframes fall {
+      to {
+        transform: translateY(100vh);
+        opacity: 0;
+      }
+    }
+  </style>
+</head>
+<body>
+  <h1>Snowy Whispers of the Moon</h1>
+  <p>Select a day to uncover its whisper...</p>
+
+  <div id="calendar"></div>
+
+  <script>
+    // ❄️ Snowfall
+    const numSnowflakes = 40;
+    for (let i = 0; i < numSnowflakes; i++) {
+      const snowflake = document.createElement("div");
+      snowflake.classList.add("snowflake");
+      const size = Math.random() * 5 + 2;
+      snowflake.style.width = `${size}px`;
+      snowflake.style.height = `${size}px`;
+      snowflake.style.left = `${Math.random() * 100}vw`;
+      snowflake.style.animationDuration = `${5 + Math.random() * 10}s`;
+      snowflake.style.animationDelay = `${Math.random() * 5}s`;
+      document.body.appendChild(snowflake);
+    }
+
+    // 🌙 Generate 31 doors dynamically
+    const calendar = document.getElementById('calendar');
+    const totalDays = 31;
+
+    const today = new Date();
+    const currentDay = today.getMonth() === 11 ? today.getDate() : 31; // Unlock all except December
+
+    for (let day = 1; day <= totalDays; day++) {
+      const door = document.createElement('div');
+      door.classList.add('door');
+      if (day > currentDay) door.classList.add('locked');
+      door.textContent = day;
+
+      if (day <= currentDay) {
+        door.addEventListener('click', () => {
+          const dayStr = String(day).padStart(2, '0');
+          window.location.href = `day${dayStr}.html`;
+        });
+      }
+
+      calendar.appendChild(door);
+    }
+  </script>
+</body>
+</html>
