@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Day 1 — Snowy Whispers of the Moon</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Source+Code+Pro&display=swap" rel="stylesheet">
+  <style>
+    body {
+      margin: 0;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      background: radial-gradient(circle at top, #cfdcff 0%, #0e1633 90%);
+      color: #f0f6ff;
+      font-family: 'Playfair Display', serif;
+      text-align: center;
+      overflow: hidden;
+    }
+
+    h1 {
+      font-size: 2rem;
+      text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+      margin-bottom: 0.8rem;
+    }
+
+    p.riddle {
+      color: #cfd7ff;
+      font-size: 1.1rem;
+      max-width: 600px;
+      margin: 1rem auto;
+    }
+
+    input {
+      background: rgba(255, 255, 255, 0.1);
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      color: #fff;
+      padding: 0.6rem 1rem;
+      border-radius: 8px;
+      font-size: 1rem;
+      outline: none;
+      width: 220px;
+      font-family: 'Source Code Pro', monospace;
+      text-align: center;
+      margin-top: 1rem;
+    }
+
+    button {
+      background: rgba(255, 255, 255, 0.2);
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      color: #fff;
+      padding: 0.6rem 1rem;
+      border-radius: 8px;
+      font-family: 'Source Code Pro', monospace;
+      font-size: 1rem;
+      cursor: pointer;
+      margin-left: 0.5rem;
+      transition: background 0.3s ease;
+    }
+
+    button:hover {
+      background: rgba(255, 255, 255, 0.35);
+    }
+
+    #story {
+      display: none;
+      margin-top: 2rem;
+      max-width: 600px;
+      color: #e6ecff;
+      line-height: 1.6;
+      font-size: 1.1rem;
+      text-shadow: 0 0 8px rgba(255, 255, 255, 0.1);
+    }
+
+    a.back {
+      color: #c5d3ff;
+      font-size: 0.9rem;
+      margin-top: 2rem;
+      display: inline-block;
+      text-decoration: none;
+      font-family: 'Source Code Pro', monospace;
+      transition: color 0.3s;
+    }
+
+    a.back:hover {
+      color: #fff;
+      text-decoration: underline;
+    }
+
+    /* Snow */
+    .snowflake {
+      position: absolute;
+      top: 0;
+      background: white;
+      border-radius: 50%;
+      opacity: 0.8;
+      animation: fall linear infinite;
+      z-index: 0;
+    }
+
+    @keyframes fall {
+      to {
+        transform: translateY(100vh);
+        opacity: 0;
+      }
+    }
+  </style>
+</head>
+<body>
+  <h1>Day 1 — The First Whisper</h1>
+  <p class="riddle">
+    “I shine, yet I borrow my light.  
+    I wax, I wane, I watch the night.  
+    Tell me my name, and the story shall wake.”
+  </p>
+
+  <div>
+    <input type="text" id="answer" placeholder="your answer..." />
+    <button onclick="checkAnswer()">Reveal</button>
+  </div>
+
+  <div id="story">
+    <p>
+      The moon hung low over the frostbitten forest, her light spilling over
+      branches dusted with silver. In the silence, a whisper stirred — your
+      journey has begun. Somewhere in the cold, a secret awaits.
+    </p>
+  </div>
+
+  <a href="calendar.html" class="back">← back to calendar</a>
+
+  <script>
+    // ❄️ Snowfall
+    const numSnowflakes = 40;
+    for (let i = 0; i < numSnowflakes; i++) {
+      const snowflake = document.createElement("div");
+      snowflake.classList.add("snowflake");
+      const size = Math.random() * 5 + 2;
+      snowflake.style.width = `${size}px`;
+      snowflake.style.height = `${size}px`;
+      snowflake.style.left = `${Math.random() * 100}vw`;
+      snowflake.style.animationDuration = `${5 + Math.random() * 10}s`;
+      snowflake.style.animationDelay = `${Math.random() * 5}s`;
+      document.body.appendChild(snowflake);
+    }
+
+    // 🌙 Check riddle answer
+    function checkAnswer() {
+      const input = document.getElementById('answer').value.trim().toLowerCase();
+      const correctAnswers = ["moon", "the moon"]; // add variants if you like
+
+      if (correctAnswers.includes(input)) {
+        document.getElementById('story').style.display = 'block';
+      } else {
+        alert("The whisper fades... try again.");
+      }
+    }
+  </script>
+</body>
+</html>
