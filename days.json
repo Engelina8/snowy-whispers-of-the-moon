@@ -1,0 +1,16 @@
+[
+  {
+    "day": 1,
+    "title": "The First Whisper",
+    "riddle": "I shine, yet I borrow my light. I wax, I wane, I watch the night. Tell me my name, and the story shall wake.",
+    "answers": ["moon", "the moon"],
+    "story": "The moon hung low over the frostbitten forest, her light spilling over branches dusted with silver. In the silence, a whisper stirred — your journey has begun. Somewhere in the cold, a secret awaits."
+  },
+  {
+    "day": 2,
+    "title": "Echo Beneath the Stars",
+    "riddle": "I am heard but never seen, my voice a shimmer between worlds. What am I?",
+    "answers": ["echo"],
+    "story": "Somewhere between the stars, an echo answered the moon’s call. Faint, but real — proof that she was not alone."
+  }
+]
