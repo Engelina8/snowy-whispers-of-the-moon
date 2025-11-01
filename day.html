@@ -1,34 +1,93 @@
+<!-- day.html -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Snowy Whispers of the Moon</title>
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Source+Code+Pro&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
-  <div id="moon"></div>
-  <div id="content">
-    <h1 id="title"></h1>
-    <p id="riddle" class="riddle"></p>
+  <div class="story-container">
+    <h1 id="day-title"></h1>
+    <p id="riddle-question" class="riddle"></p>
 
-    <div>
-      <input type="text" id="answer" placeholder="your answer..." />
-      <button id="reveal-btn">Reveal</button>
+    <div id="riddle-input-section">
+      <input type="text" id="riddle-answer" placeholder="Type your answer..." />
+      <button id="unlock-btn">Unlock</button>
     </div>
 
-    <div id="story" style="display: none;"></div>
-
-    <a href="calendar.html" class="back">← back to calendar</a>
+    <div id="story-content" class="hidden">
+      <p id="day-story"></p>
+    </div>
   </div>
 
-  <script src="main.js"></script>
   <div class="snow-layer"></div>
   <div class="shadow-heart"></div>
 
+  <script src="riddles.js"></script>
   <script src="backgrounds.js"></script>
   <script src="moon.js"></script>
+  <script>
+    const urlParams = new URLSearchParams(window.location.search);
+    const day = parseInt(urlParams.get("day")) || 1;
+    const riddle = riddles[day - 1];
 
+    document.getElementById("day-title").textContent = `Day ${day}: ${riddle ? riddle.question ? "Riddle" : "Story" : ""}`;
+    document.getElementById("riddle-question").textContent = riddle?.question || "No riddle available.";
+
+    // Unlock logic
+    document.getElementById("unlock-btn").addEventListener("click", () => {
+      const input = document.getElementById("riddle-answer").value.trim().toLowerCase();
+      const hash = md5(input);
+
+      if (hash === riddle.answerHash) {
+        document.getElementById("riddle-input-section").style.display = "none";
+        document.getElementById("day-story").textContent = riddle.story;
+        document.getElementById("story-content").classList.remove("hidden");
+      } else {
+        alert("That doesn’t seem right. Try again 🌙");
+      }
+    });
+
+    // Simple MD5 hashing
+    function md5(str) {
+      return CryptoJS.MD5(str).toString();
+    }
+  </script>
+
+  <!-- Include CryptoJS library for MD5 -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
+
+  <style>
+    .hidden { display: none; }
+    .riddle {
+      margin-top: 2rem;
+      font-style: italic;
+      font-size: 1.1rem;
+      color: #eee;
+    }
+    #riddle-input-section {
+      margin-top: 1rem;
+    }
+    input {
+      padding: 0.5rem;
+      border-radius: 0.5rem;
+      border: none;
+      outline: none;
+    }
+    button {
+      padding: 0.5rem 1rem;
+      border-radius: 0.5rem;
+      background: #d8c3ff;
+      border: none;
+      cursor: pointer;
+      transition: all 0.3s;
+    }
+    button:hover {
+      background: #f0e1ff;
+      transform: scale(1.05);
+    }
+  </style>
 </body>
 </html>
