@@ -362,3 +362,35 @@ body.revealed .day-container {
     text-shadow: 0 0 30px rgba(255, 230, 200, 0.6);
   }
 }
+
+/* Moon phase indicator */
+.moon-phase {
+  position: fixed;
+  top: 2rem;
+  right: 2rem;
+  text-align: right;
+  color: #e6ecff;
+  z-index: 5;
+  animation: fadeIn 2s ease forwards;
+  font-family: 'Playfair Display', serif;
+}
+
+.moon-symbol {
+  font-size: 2rem;
+  text-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
+}
+
+.moon-caption {
+  font-size: 1rem;
+  font-weight: bold;
+  margin-top: 0.3rem;
+  color: #d0dbff;
+}
+
+.moon-text {
+  font-family: 'Source Code Pro', monospace;
+  font-size: 0.9rem;
+  opacity: 0.8;
+  margin-top: 0.2rem;
+  color: #c8d7ff;
+}

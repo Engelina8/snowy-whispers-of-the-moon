@@ -1,22 +1,27 @@
-// moon.js
-function getMoonPhase(date = new Date()) {
-  const synodicMonth = 29.53058867;
-  const knownNewMoon = new Date("2024-12-01T00:00:00Z");
-  const daysSince = (date - knownNewMoon) / (1000 * 60 * 60 * 24);
-  const phase = (daysSince % synodicMonth) / synodicMonth;
+(function() {
+  // Get day number from URL
+  const urlParams = new URLSearchParams(window.location.search);
+  const currentDay = parseInt(urlParams.get("day")) || 1;
 
-  if (phase < 0.03 || phase > 0.97) return "new";
-  if (phase < 0.25) return "waxing";
-  if (phase < 0.5) return "full";
-  if (phase < 0.75) return "waning";
-  return "new";
-}
+  // Define moon phases
+  const moonPhases = [
+    { range: [1, 7], symbol: "🌑", name: "Beginnings", text: "The Moon begins to whisper." },
+    { range: [8, 14], symbol: "🌘", name: "Discovery", text: "The Moon watches quietly." },
+    { range: [15, 21], symbol: "🌓", name: "Connection", text: "The Moon listens and learns." },
+    { range: [22, 25], symbol: "🌕", name: "Revelation", text: "The Moon shines with truth." },
+    { range: [26, 31], symbol: "🌗", name: "Reflection", text: "The Moon remembers every whisper." },
+  ];
 
-function updateMoonBackground() {
-  const phase = getMoonPhase();
-  const moon = document.createElement("div");
-  moon.classList.add("moon", phase);
-  document.body.appendChild(moon);
-}
+  const currentPhase = moonPhases.find(p => currentDay >= p.range[0] && currentDay <= p.range[1]) || moonPhases[0];
 
-document.addEventListener("DOMContentLoaded", updateMoonBackground);
+  // Create moon phase element
+  const moonContainer = document.createElement("div");
+  moonContainer.classList.add("moon-phase");
+  moonContainer.innerHTML = `
+    <div class="moon-symbol">${currentPhase.symbol}</div>
+    <div class="moon-caption">${currentPhase.name}</div>
+    <p class="moon-text">${currentPhase.text}</p>
+  `;
+  
+  document.body.appendChild(moonContainer);
+})();
