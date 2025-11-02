@@ -213,13 +213,6 @@ const days = [
       phase: "🌗"
     },
     {
-      title: "The Unwritten Chapter",
-      riddle: "I begin when you stop. What am I?",
-      answer: "future",
-      story: "The book closes softly, but the story hums on beneath your fingertips.",
-      phase: "🌗"
-    },
-    {
       title: "For You",
       riddle: "There is no riddle today — only this truth: you were the story all along.",
       answer: "love",

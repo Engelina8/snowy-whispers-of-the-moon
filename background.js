@@ -12,7 +12,7 @@
   const phases = [
     {
       name: "Beginnings",
-      range: [1, 7],
+      range: [1, 6],
       background: "radial-gradient(circle at top, #0a0f1f 0%, #060913 100%)",
       snowColor: "white",
       snowOpacity: 0.8,
@@ -21,7 +21,7 @@
     },
     {
       name: "Discovery",
-      range: [8, 14],
+      range: [7, 12],
       background: "radial-gradient(circle at top, #101b3f 0%, #0a0f1f 100%)",
       snowColor: "rgba(200, 220, 255, 0.9)",
       snowOpacity: 0.9,
@@ -30,7 +30,7 @@
     },
     {
       name: "Connection",
-      range: [15, 21],
+      range: [13, 20],
       background: "radial-gradient(circle at bottom, #182752 0%, #0a0f1f 100%)",
       snowColor: "rgba(210, 220, 255, 0.8)",
       snowOpacity: 0.9,
@@ -39,7 +39,7 @@
     },
     {
       name: "Revelation",
-      range: [22, 25],
+      range: [21, 25],
       background: "radial-gradient(circle at center, #243468 0%, #0e1633 100%)",
       snowColor: "rgba(230, 240, 255, 1)",
       snowOpacity: 1,
