@@ -1,8 +1,5 @@
-document.addEventListener("DOMContentLoaded", () => {
-
-  const params = new URLSearchParams(window.location.search);
-  const currentDay = parseInt(params.get("day")) || 1;
-  const days = [
+// Make days data globally accessible
+const days = [
     // 🌑 Beginnings (Days 1–7)
     {
       title: "The First Whisper",
@@ -245,7 +242,12 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   ];
 
-  const currentData = days.find((d) => d.day === currentDay);
+// Initialize day content when DOM is loaded
+document.addEventListener("DOMContentLoaded", () => {
+  const params = new URLSearchParams(window.location.search);
+  const currentDay = parseInt(params.get("day")) || 1;
+
+  const currentData = days[currentDay - 1]; // Use array index instead of find
 
   const titleEl = document.getElementById("day-title");
   const riddleEl = document.getElementById("day-riddle");
@@ -253,13 +255,13 @@ document.addEventListener("DOMContentLoaded", () => {
   const phaseEl = document.getElementById("day-phase");
 
   if (currentData) {
-    titleEl.textContent = currentData.title;
-    riddleEl.textContent = currentData.riddle;
-    storyEl.textContent = currentData.story;
+    if (titleEl) titleEl.textContent = currentData.title;
+    if (riddleEl) riddleEl.textContent = currentData.riddle;
+    if (storyEl) storyEl.textContent = currentData.story;
   } else {
-    titleEl.textContent = `Day ${currentDay}`;
-    riddleEl.textContent = "No riddle found.";
-    storyEl.textContent = "The whispers are silent today.";
+    if (titleEl) titleEl.textContent = `Day ${currentDay}`;
+    if (riddleEl) riddleEl.textContent = "No riddle found.";
+    if (storyEl) storyEl.textContent = "The whispers are silent today.";
   }
 
   const phase = 
