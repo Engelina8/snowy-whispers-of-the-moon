@@ -159,3 +159,107 @@ a.day-link {
 a.day-link:visited {
   color: inherit;
 }
+
+/* --- DAY PAGE STYLING --- */
+.day-body {
+  background: radial-gradient(circle at top, #cfdcff 0%, #0e1633 90%);
+  color: #f0f6ff;
+  font-family: 'Playfair Display', serif;
+  text-align: center;
+  padding: 3rem 1.5rem;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.day-container {
+  z-index: 2;
+  max-width: 600px;
+  background: rgba(14, 22, 51, 0.6);
+  border: 1px solid rgba(207, 220, 255, 0.3);
+  border-radius: 20px;
+  padding: 2rem;
+  box-shadow: 0 0 20px rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(6px);
+  transition: background 2s ease;
+}
+
+.day-heading {
+  font-size: 2rem;
+  margin-bottom: 1rem;
+  text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+}
+
+.riddle-text {
+  font-family: 'Source Code Pro', monospace;
+  font-size: 1.1rem;
+  color: #d8e4ff;
+  margin-bottom: 1.5rem;
+}
+
+.riddle-input input {
+  padding: 0.6rem 1rem;
+  border: none;
+  border-radius: 10px;
+  font-size: 1rem;
+  outline: none;
+  width: 220px;
+  background: rgba(255, 255, 255, 0.15);
+  color: #f0f6ff;
+  font-family: 'Source Code Pro', monospace;
+  transition: box-shadow 0.3s ease;
+}
+
+.riddle-input input:focus {
+  box-shadow: 0 0 10px rgba(207, 220, 255, 0.6);
+}
+
+.riddle-input button {
+  margin-left: 0.5rem;
+  padding: 0.6rem 1.2rem;
+  border: none;
+  border-radius: 10px;
+  background: #cfe3ff;
+  color: #0e1633;
+  font-weight: bold;
+  cursor: pointer;
+  transition: transform 0.2s, background 0.3s;
+}
+
+.riddle-input button:hover {
+  background: #e6eeff;
+  transform: scale(1.05);
+}
+
+.story-text {
+  margin-top: 1.5rem;
+  font-size: 1.1rem;
+  color: #e6ecff;
+  animation: fadeIn 1.5s ease forwards;
+}
+
+.feedback {
+  margin-top: 1rem;
+  font-family: 'Source Code Pro', monospace;
+  font-size: 0.95rem;
+  min-height: 1.2rem;
+}
+
+.back-link {
+  display: inline-block;
+  margin-top: 2rem;
+  color: #cfe3ff;
+  text-decoration: none;
+  font-family: 'Source Code Pro', monospace;
+  transition: color 0.3s;
+}
+
+.back-link:hover {
+  color: #ffffff;
+}
+
+body.revealed .day-container {
+  background: rgba(25, 40, 80, 0.7);
+}
