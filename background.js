@@ -1,12 +1,9 @@
-// backgrounds.js
 (function () {
-  // Detect current day
+  // Detect current day (from URL or today's date)
   let currentDay = 1;
-
-  // For calendar.html (no ?day param), we can default to today's real date (1–31)
   const params = new URLSearchParams(window.location.search);
-  if (params.has('day')) {
-    currentDay = parseInt(params.get('day'));
+  if (params.has("day")) {
+    currentDay = parseInt(params.get("day"));
   } else {
     currentDay = new Date().getDate();
   }
@@ -20,6 +17,7 @@
       snowColor: "white",
       snowOpacity: 0.8,
       starEffect: false,
+      symbol: "🌑",
     },
     {
       name: "Discovery",
@@ -28,6 +26,7 @@
       snowColor: "rgba(200, 220, 255, 0.9)",
       snowOpacity: 0.9,
       starEffect: true,
+      symbol: "🌘",
     },
     {
       name: "Connection",
@@ -36,6 +35,7 @@
       snowColor: "rgba(210, 220, 255, 0.8)",
       snowOpacity: 0.9,
       shadowEffect: true,
+      symbol: "🌓",
     },
     {
       name: "Revelation",
@@ -44,6 +44,7 @@
       snowColor: "rgba(230, 240, 255, 1)",
       snowOpacity: 1,
       heartEffect: true,
+      symbol: "🌕",
     },
     {
       name: "Reflection",
@@ -52,20 +53,23 @@
       snowColor: "rgba(255, 240, 220, 0.9)",
       snowOpacity: 0.9,
       finalGlow: true,
+      symbol: "🌗",
     },
   ];
 
   // Determine current phase
-  const phase = phases.find(p => currentDay >= p.range[0] && currentDay <= p.range[1]) || phases[0];
+  const phase =
+    phases.find((p) => currentDay >= p.range[0] && currentDay <= p.range[1]) ||
+    phases[0];
 
-  // Apply background
+  // Apply background transition
   document.body.style.background = phase.background;
   document.body.style.transition = "background 2s ease";
 
-  // Update existing snowflakes
-  document.querySelectorAll(".snowflake").forEach(snowflake => {
-    snowflake.style.background = phase.snowColor;
-    snowflake.style.opacity = phase.snowOpacity;
+  // Update snowflakes
+  document.querySelectorAll(".snowflake").forEach((flake) => {
+    flake.style.background = phase.snowColor;
+    flake.style.opacity = phase.snowOpacity;
   });
 
   // ✨ Add subtle star effects (Discovery phase)
@@ -105,12 +109,20 @@
     glow.classList.add("final-glow");
     document.body.appendChild(glow);
 
-    // If it's Day 31, reveal the secret inscription
+    // Day 31 message
     if (currentDay === 31) {
       const message = document.createElement("div");
       message.classList.add("final-message");
       message.textContent = "for you — always";
       document.body.appendChild(message);
     }
+  }
+
+  // 🌙 Inject phase indicator on day.html only
+  if (params.has("day")) {
+    const phaseBadge = document.createElement("div");
+    phaseBadge.classList.add("phase-badge");
+    phaseBadge.textContent = `${phase.symbol} ${phase.name}`;
+    document.body.appendChild(phaseBadge);
   }
 })();

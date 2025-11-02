@@ -394,3 +394,124 @@ body.revealed .day-container {
   margin-top: 0.2rem;
   color: #c8d7ff;
 }
+
+/* Moon phase badge */
+.phase-badge {
+  position: fixed;
+  top: 1rem;
+  right: 1rem;
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  border-radius: 12px;
+  padding: 0.5rem 1rem;
+  font-family: 'Source Code Pro', monospace;
+  font-size: 0.9rem;
+  color: #d8e5ff;
+  text-shadow: 0 0 5px rgba(255, 255, 255, 0.3);
+  backdrop-filter: blur(6px);
+  z-index: 1000;
+  animation: fadeIn 1.5s ease-in-out;
+}
+
+/* Star twinkle */
+.star {
+  position: absolute;
+  width: 2px;
+  height: 2px;
+  background: white;
+  border-radius: 50%;
+  opacity: 0.8;
+  animation: twinkle 2s infinite ease-in-out;
+}
+
+@keyframes twinkle {
+  0%, 100% { opacity: 0.3; transform: scale(1); }
+  50% { opacity: 1; transform: scale(1.4); }
+}
+
+/* Heart effect */
+.snow-heart {
+  position: absolute;
+  width: 40px;
+  height: 40px;
+  background: radial-gradient(circle at 30% 30%, #fff 0%, #f7c8f9 40%, transparent 70%);
+  clip-path: path('M24 4c-4-4-12 2-12 8 0 6 12 12 12 12s12-6 12-12c0-6-8-12-12-8z');
+  opacity: 0.6;
+  animation: fadeHeart 2s ease-out forwards;
+}
+
+@keyframes fadeHeart {
+  from { opacity: 0; transform: scale(0.8); }
+  50% { opacity: 1; transform: scale(1); }
+  to { opacity: 0; transform: scale(1.2); }
+}
+
+/* Final glow */
+.final-glow {
+  position: fixed;
+  inset: 0;
+  background: radial-gradient(circle at center, rgba(255, 220, 180, 0.15), transparent 80%);
+  pointer-events: none;
+  animation: pulse 4s ease-in-out infinite alternate;
+}
+
+@keyframes pulse {
+  from { opacity: 0.3; }
+  to { opacity: 0.7; }
+}
+
+.final-message {
+  position: fixed;
+  bottom: 3rem;
+  width: 100%;
+  text-align: center;
+  font-size: 1.5rem;
+  color: #fff3e6;
+  font-family: 'Playfair Display', serif;
+  text-shadow: 0 0 12px #ffcfb0;
+  animation: fadeIn 3s ease forwards;
+}
+
+body[data-phase="Beginnings"] .day-content {
+  color: #e6f0ff;
+  text-shadow: 0 0 8px #7fa0ff;
+}
+
+body[data-phase="Discovery"] .day-content {
+  color: #dbe4ff;
+  text-shadow: 0 0 10px #a6c8ff;
+}
+
+body[data-phase="Connection"] .day-content {
+  color: #e6eaff;
+  text-shadow: 0 0 10px #bfbfff;
+}
+
+body[data-phase="Revelation"] .day-content {
+  color: #fff3fa;
+  text-shadow: 0 0 12px #ffc6e5;
+}
+
+body[data-phase="Reflection"] .day-content {
+  color: #fff7e9;
+  text-shadow: 0 0 15px #ffe0b2;
+}
+
+.day-content {
+  max-width: 700px;
+  margin: 10vh auto;
+  padding: 2rem;
+  text-align: center;
+  font-family: "Playfair Display", serif;
+}
+
+.riddle {
+  font-style: italic;
+  margin: 1.5rem 0;
+  opacity: 0.8;
+}
+
+.story {
+  font-size: 1.1rem;
+  line-height: 1.7;
+}
