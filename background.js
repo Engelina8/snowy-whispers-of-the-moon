@@ -109,13 +109,7 @@
     glow.classList.add("final-glow");
     document.body.appendChild(glow);
 
-    // Day 31 message
-    if (currentDay === 31) {
-      const message = document.createElement("div");
-      message.classList.add("final-message");
-      message.textContent = "for you — always";
-      document.body.appendChild(message);
-    }
+    // Day 31 message will be triggered from day.html when riddle is solved
   }
 
   // 🌙 Inject phase indicator on day.html only

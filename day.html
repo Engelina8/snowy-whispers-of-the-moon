@@ -81,6 +81,16 @@
             feedback.textContent = "✨ The whisper reveals itself...";
             feedback.style.color = "#cfe3ff";
             document.body.classList.add("revealed");
+            
+            // Show final message only on day 31 after riddle is solved
+            if (currentDay === 31) {
+              setTimeout(() => {
+                const message = document.createElement("div");
+                message.classList.add("final-message");
+                message.textContent = "for you — always";
+                document.body.appendChild(message);
+              }, 2000); // Wait 2 seconds after revealing the story
+            }
           } else {
             feedback.textContent = "That doesn't sound quite right...";
             feedback.style.color = "#ffb3b3";
