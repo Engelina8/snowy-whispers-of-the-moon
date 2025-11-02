@@ -1,6 +1,7 @@
+// moon.js
 function getMoonPhase(date = new Date()) {
   const synodicMonth = 29.53058867;
-  const knownNewMoon = new Date("2024-12-01T00:00:00Z"); // known new moon reference
+  const knownNewMoon = new Date("2024-12-01T00:00:00Z");
   const daysSince = (date - knownNewMoon) / (1000 * 60 * 60 * 24);
   const phase = (daysSince % synodicMonth) / synodicMonth;
 

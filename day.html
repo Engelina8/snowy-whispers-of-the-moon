@@ -1,93 +1,73 @@
-<!-- day.html -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Snowy Whispers of the Moon</title>
-  <link rel="stylesheet" href="styles.css" />
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <div class="story-container">
-    <h1 id="day-title"></h1>
-    <p id="riddle-question" class="riddle"></p>
+  <div class="moonlight-overlay"></div>
+  <div class="snow-layer"></div>
 
-    <div id="riddle-input-section">
-      <input type="text" id="riddle-answer" placeholder="Type your answer..." />
-      <button id="unlock-btn">Unlock</button>
+  <div class="content">
+    <div id="riddle-container" class="fade-in">
+      <p id="riddle-text"></p>
+      <input type="text" id="answer" placeholder="Your answer..." />
+      <button id="submit-answer">Unlock</button>
+      <p id="feedback"></p>
     </div>
 
-    <div id="story-content" class="hidden">
+    <div id="story-container" class="fade-in" style="display:none;">
+      <h2 id="day-title"></h2>
       <p id="day-story"></p>
     </div>
   </div>
 
-  <div class="snow-layer"></div>
-  <div class="shadow-heart"></div>
-
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/blueimp-md5/2.19.0/js/md5.min.js"></script>
   <script src="riddles.js"></script>
-  <script src="backgrounds.js"></script>
-  <script src="moon.js"></script>
+
   <script>
     const urlParams = new URLSearchParams(window.location.search);
     const day = parseInt(urlParams.get("day")) || 1;
-    const riddle = riddles[day - 1];
+    const riddleData = riddles[day-1];
 
-    document.getElementById("day-title").textContent = `Day ${day}: ${riddle ? riddle.question ? "Riddle" : "Story" : ""}`;
-    document.getElementById("riddle-question").textContent = riddle?.question || "No riddle available.";
+    const riddleText = document.getElementById("riddle-text");
+    const answerInput = document.getElementById("answer");
+    const feedback = document.getElementById("feedback");
+    const storyContainer = document.getElementById("story-container");
+    const dayTitle = document.getElementById("day-title");
+    const dayStory = document.getElementById("day-story");
+    const submitButton = document.getElementById("submit-answer");
 
-    // Unlock logic
-    document.getElementById("unlock-btn").addEventListener("click", () => {
-      const input = document.getElementById("riddle-answer").value.trim().toLowerCase();
-      const hash = md5(input);
+    const dayKey = `day${day}Solved`;
 
-      if (hash === riddle.answerHash) {
-        document.getElementById("riddle-input-section").style.display = "none";
-        document.getElementById("day-story").textContent = riddle.story;
-        document.getElementById("story-content").classList.remove("hidden");
+    riddleText.textContent = riddleData.question;
+
+    if(localStorage.getItem(dayKey) === "true") revealStory();
+
+    submitButton.addEventListener("click", () => {
+      const userAnswer = answerInput.value.trim().toLowerCase();
+      if(md5(userAnswer) === riddleData.answerHash){
+        feedback.textContent = "✨ The whisper is revealed...";
+        feedback.style.color = "#cce6ff";
+        setTimeout(() => {
+          localStorage.setItem(dayKey, "true");
+          revealStory();
+        }, 800);
       } else {
-        alert("That doesn’t seem right. Try again 🌙");
+        feedback.textContent = "That doesn’t sound quite right...";
+        feedback.style.color = "#ffb3b3";
       }
     });
 
-    // Simple MD5 hashing
-    function md5(str) {
-      return CryptoJS.MD5(str).toString();
+    function revealStory(){
+      document.getElementById("riddle-container").style.display = "none";
+      storyContainer.style.display = "block";
+      dayTitle.textContent = riddleData.title;
+      dayStory.textContent = riddleData.story;
+      document.body.classList.add("revealed");
     }
   </script>
-
-  <!-- Include CryptoJS library for MD5 -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
-
-  <style>
-    .hidden { display: none; }
-    .riddle {
-      margin-top: 2rem;
-      font-style: italic;
-      font-size: 1.1rem;
-      color: #eee;
-    }
-    #riddle-input-section {
-      margin-top: 1rem;
-    }
-    input {
-      padding: 0.5rem;
-      border-radius: 0.5rem;
-      border: none;
-      outline: none;
-    }
-    button {
-      padding: 0.5rem 1rem;
-      border-radius: 0.5rem;
-      background: #d8c3ff;
-      border: none;
-      cursor: pointer;
-      transition: all 0.3s;
-    }
-    button:hover {
-      background: #f0e1ff;
-      transform: scale(1.05);
-    }
-  </style>
 </body>
 </html>
