@@ -9,23 +9,22 @@
 </head>
 <body class="day-body">
   <script src="backgrounds.js"></script>
+  <script src="days.js"></script>
+
   <div class="moonlight-overlay"></div>
 
-  <div class="day-container">
-    <h1 class="day-heading" id="title">The First Whisper</h1>
-    <p id="riddle" class="riddle-text">“I am taken before you rise, but found before you sleep. I glow without flame — what am I?”</p>
+  <div class="day-container content">
+    <h1 class="day-heading" id="title"></h1>
+    <div class="moon-phase" id="phase"></div>
+
+    <p id="riddle" class="riddle-text"></p>
 
     <div class="riddle-input">
       <input type="text" id="answer" placeholder="Type your answer..." />
       <button id="reveal-btn">Reveal</button>
     </div>
 
-    <div id="story" class="story-text" style="display: none;">
-      <p>
-        The first whisper drifts through the frost — a memory of moonlight and laughter, 
-        buried under snow yet still warm to the touch. The night listens.
-      </p>
-    </div>
+    <div id="story" class="story-text" style="display: none;"></div>
 
     <p id="feedback" class="feedback"></p>
 
@@ -33,14 +32,37 @@
   </div>
 
   <script>
+    // Parse day number from URL (?day=1)
+    const urlParams = new URLSearchParams(window.location.search);
+    const currentDay = parseInt(urlParams.get("day")) || 1;
+    const dayData = days[currentDay - 1];
+
+    // Fill in dynamic data
+    const title = document.getElementById("title");
+    const riddle = document.getElementById("riddle");
+    const story = document.getElementById("story");
+    const phase = document.getElementById("phase");
+
+    if (dayData) {
+      title.textContent = dayData.title;
+      riddle.textContent = dayData.riddle || "";
+      story.innerHTML = `<p>${dayData.story}</p>`;
+      phase.textContent = dayData.phase || "";
+    } else {
+      title.textContent = "A Missing Whisper...";
+      riddle.textContent = "The page seems lost in the snow.";
+    }
+
+    // Reveal system
     const revealBtn = document.getElementById('reveal-btn');
-    const story = document.getElementById('story');
     const feedback = document.getElementById('feedback');
     const answerInput = document.getElementById('answer');
 
     revealBtn.addEventListener('click', () => {
       const answer = answerInput.value.trim().toLowerCase();
-      if (answer === "moon") {
+      const correctAnswer = (dayData.answer || "").toLowerCase();
+
+      if (answer === correctAnswer) {
         story.style.display = 'block';
         feedback.textContent = "✨ The whisper reveals itself...";
         feedback.style.color = "#cfe3ff";
@@ -50,22 +72,22 @@
         feedback.style.color = "#ffb3b3";
       }
     });
-  </script>
 
-  <script>
-  // Add gentle snowfall
-  const numSnowflakes = 40;
-  for (let i = 0; i < numSnowflakes; i++) {
-    const snowflake = document.createElement("div");
-    snowflake.classList.add("snowflake");
-    const size = Math.random() * 5 + 2;
-    snowflake.style.width = `${size}px`;
-    snowflake.style.height = `${size}px`;
-    snowflake.style.left = `${Math.random() * 100}vw`;
-    snowflake.style.animationDuration = `${5 + Math.random() * 10}s`;
-    snowflake.style.animationDelay = `${Math.random() * 5}s`;
-    document.body.appendChild(snowflake);
-  }
+    // Gentle snowfall (fixed version)
+    const numSnowflakes = 40;
+    for (let i = 0; i < numSnowflakes; i++) {
+      const snowflake = document.createElement("div");
+      snowflake.classList.add("snowflake");
+      const size = Math.random() * 5 + 2;
+      snowflake.style.width = `${size}px`;
+      snowflake.style.height = `${size}px`;
+      snowflake.style.left = `${Math.random() * 100}vw`;
+      snowflake.style.animationDuration = `${5 + Math.random() * 10}s`;
+      snowflake.style.animationDelay = `${Math.random() * 5}s`;
+      snowflake.style.opacity = Math.random() * 0.8 + 0.2;
+      snowflake.style.animationTimingFunction = "linear";
+      document.body.appendChild(snowflake);
+    }
   </script>
 
 </body>
