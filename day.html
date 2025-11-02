@@ -8,9 +8,7 @@
   <link rel="stylesheet" href="style.css">
 </head>
 <body class="day-body">
-  <div class="snow-layer"></div>
   <div class="moonlight-overlay"></div>
-  <div class="snow-layer"></div>
 
   <div class="day-container">
     <h1 class="day-heading" id="title">The First Whisper</h1>
@@ -52,5 +50,22 @@
       }
     });
   </script>
+
+  <script>
+  // Add gentle snowfall
+  const numSnowflakes = 40;
+  for (let i = 0; i < numSnowflakes; i++) {
+    const snowflake = document.createElement("div");
+    snowflake.classList.add("snowflake");
+    const size = Math.random() * 5 + 2;
+    snowflake.style.width = `${size}px`;
+    snowflake.style.height = `${size}px`;
+    snowflake.style.left = `${Math.random() * 100}vw`;
+    snowflake.style.animationDuration = `${5 + Math.random() * 10}s`;
+    snowflake.style.animationDelay = `${Math.random() * 5}s`;
+    document.body.appendChild(snowflake);
+  }
+  </script>
+  
 </body>
 </html>
