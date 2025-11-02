@@ -8,16 +8,13 @@
   <link rel="stylesheet" href="style.css">
 </head>
 <body class="day-body">
-  <script src="background.js"></script>
-  <script src="days.js"></script>
-
   <div class="moonlight-overlay"></div>
 
   <div class="day-container content">
-    <h1 class="day-heading" id="title"></h1>
+    <h1 class="day-heading" id="title">Loading...</h1>
     <div class="moon-phase" id="phase"></div>
 
-    <p id="riddle" class="riddle-text"></p>
+    <p id="riddle" class="riddle-text">Loading riddle...</p>
 
     <div class="riddle-input">
       <input type="text" id="answer" placeholder="Type your answer..." />
@@ -31,63 +28,82 @@
     <a href="calendar.html" class="back-link">← Return to Calendar</a>
   </div>
 
+  <!-- Load scripts in correct order -->
+  <script src="days.js"></script>
+  <script src="background.js"></script>
+  
   <script>
-    // Parse day number from URL (?day=1)
-    const urlParams = new URLSearchParams(window.location.search);
-    const currentDay = parseInt(urlParams.get("day")) || 1;
-    const dayData = days[currentDay - 1];
+    document.addEventListener('DOMContentLoaded', function() {
+      console.log("DOM loaded, days array:", typeof days !== 'undefined' ? days.length : 'undefined');
+      
+      // Parse day number from URL (?day=1)
+      const urlParams = new URLSearchParams(window.location.search);
+      const currentDay = parseInt(urlParams.get("day")) || 1;
+      
+      console.log("Current day:", currentDay);
+      
+      if (typeof days === 'undefined') {
+        console.error("Days array is not available!");
+        return;
+      }
+      
+      const dayData = days[currentDay - 1];
+      console.log("Day data:", dayData);
 
-    // Fill in dynamic data
-    const title = document.getElementById("title");
-    const riddle = document.getElementById("riddle");
-    const story = document.getElementById("story");
-    const phase = document.getElementById("phase");
+      // Fill in dynamic data
+      const title = document.getElementById("title");
+      const riddle = document.getElementById("riddle");
+      const story = document.getElementById("story");
+      const phase = document.getElementById("phase");
 
-    if (dayData) {
-      title.textContent = dayData.title;
-      riddle.textContent = dayData.riddle || "";
-      story.innerHTML = `<p>${dayData.story}</p>`;
-      phase.textContent = dayData.phase || "";
-    } else {
-      title.textContent = "A Missing Whisper...";
-      riddle.textContent = "The page seems lost in the snow.";
-    }
-
-    // Reveal system
-    const revealBtn = document.getElementById('reveal-btn');
-    const feedback = document.getElementById('feedback');
-    const answerInput = document.getElementById('answer');
-
-    revealBtn.addEventListener('click', () => {
-      const answer = answerInput.value.trim().toLowerCase();
-      const correctAnswer = (dayData.answer || "").toLowerCase();
-
-      if (answer === correctAnswer) {
-        story.style.display = 'block';
-        feedback.textContent = "✨ The whisper reveals itself...";
-        feedback.style.color = "#cfe3ff";
-        document.body.classList.add("revealed");
+      if (dayData) {
+        if (title) title.textContent = dayData.title;
+        if (riddle) riddle.textContent = dayData.riddle || "";
+        if (story) story.innerHTML = `<p>${dayData.story}</p>`;
+        if (phase) phase.textContent = dayData.phase || "";
       } else {
-        feedback.textContent = "That doesn’t sound quite right...";
-        feedback.style.color = "#ffb3b3";
+        if (title) title.textContent = "A Missing Whisper...";
+        if (riddle) riddle.textContent = "The page seems lost in the snow.";
+      }
+
+      // Reveal system
+      const revealBtn = document.getElementById('reveal-btn');
+      const feedback = document.getElementById('feedback');
+      const answerInput = document.getElementById('answer');
+
+      if (revealBtn && feedback && answerInput) {
+        revealBtn.addEventListener('click', () => {
+          const answer = answerInput.value.trim().toLowerCase();
+          const correctAnswer = (dayData && dayData.answer ? dayData.answer : "").toLowerCase();
+
+          if (answer === correctAnswer) {
+            story.style.display = 'block';
+            feedback.textContent = "✨ The whisper reveals itself...";
+            feedback.style.color = "#cfe3ff";
+            document.body.classList.add("revealed");
+          } else {
+            feedback.textContent = "That doesn't sound quite right...";
+            feedback.style.color = "#ffb3b3";
+          }
+        });
+      }
+
+      // Gentle snowfall
+      const numSnowflakes = 40;
+      for (let i = 0; i < numSnowflakes; i++) {
+        const snowflake = document.createElement("div");
+        snowflake.classList.add("snowflake");
+        const size = Math.random() * 5 + 2;
+        snowflake.style.width = `${size}px`;
+        snowflake.style.height = `${size}px`;
+        snowflake.style.left = `${Math.random() * 100}vw`;
+        snowflake.style.animationDuration = `${5 + Math.random() * 10}s`;
+        snowflake.style.animationDelay = `${Math.random() * 5}s`;
+        snowflake.style.opacity = Math.random() * 0.8 + 0.2;
+        snowflake.style.animationTimingFunction = "linear";
+        document.body.appendChild(snowflake);
       }
     });
-
-    // Gentle snowfall (fixed version)
-    const numSnowflakes = 40;
-    for (let i = 0; i < numSnowflakes; i++) {
-      const snowflake = document.createElement("div");
-      snowflake.classList.add("snowflake");
-      const size = Math.random() * 5 + 2;
-      snowflake.style.width = `${size}px`;
-      snowflake.style.height = `${size}px`;
-      snowflake.style.left = `${Math.random() * 100}vw`;
-      snowflake.style.animationDuration = `${5 + Math.random() * 10}s`;
-      snowflake.style.animationDelay = `${Math.random() * 5}s`;
-      snowflake.style.opacity = Math.random() * 0.8 + 0.2;
-      snowflake.style.animationTimingFunction = "linear";
-      document.body.appendChild(snowflake);
-    }
   </script>
 
 </body>

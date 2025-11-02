@@ -242,28 +242,12 @@ const days = [
     }
   ];
 
-// Initialize day content when DOM is loaded
+// Initialize phase data when DOM is loaded (for styling only)
 document.addEventListener("DOMContentLoaded", () => {
   const params = new URLSearchParams(window.location.search);
   const currentDay = parseInt(params.get("day")) || 1;
 
-  const currentData = days[currentDay - 1]; // Use array index instead of find
-
-  const titleEl = document.getElementById("day-title");
-  const riddleEl = document.getElementById("day-riddle");
-  const storyEl = document.getElementById("day-story");
-  const phaseEl = document.getElementById("day-phase");
-
-  if (currentData) {
-    if (titleEl) titleEl.textContent = currentData.title;
-    if (riddleEl) riddleEl.textContent = currentData.riddle;
-    if (storyEl) storyEl.textContent = currentData.story;
-  } else {
-    if (titleEl) titleEl.textContent = `Day ${currentDay}`;
-    if (riddleEl) riddleEl.textContent = "No riddle found.";
-    if (storyEl) storyEl.textContent = "The whispers are silent today.";
-  }
-
+  // Only set the phase attribute for styling - let day.html handle content
   const phase = 
     currentDay <= 7
     ? "Beginnings"
