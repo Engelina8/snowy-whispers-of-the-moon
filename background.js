@@ -104,5 +104,13 @@
     const glow = document.createElement("div");
     glow.classList.add("final-glow");
     document.body.appendChild(glow);
+
+    // If it's Day 31, reveal the secret inscription
+    if (currentDay === 31) {
+      const message = document.createElement("div");
+      message.classList.add("final-message");
+      message.textContent = "for you — always";
+      document.body.appendChild(message);
+    }
   }
 })();

@@ -329,3 +329,36 @@ body.revealed .day-container {
   0% { opacity: 0.2; }
   100% { opacity: 0.6; }
 }
+
+/* Final inscription (Day 31 only) */
+.final-message {
+  position: fixed;
+  bottom: 10%;
+  width: 100%;
+  text-align: center;
+  font-family: 'Playfair Display', serif;
+  font-size: 1.8rem;
+  letter-spacing: 1px;
+  color: rgba(255, 245, 230, 0);
+  text-shadow: 0 0 20px rgba(255, 230, 200, 0.1);
+  z-index: 3;
+  animation: revealMessage 10s ease-in-out forwards 4s; /* delay for glow first */
+}
+
+@keyframes revealMessage {
+  0% {
+    opacity: 0;
+    color: rgba(255, 245, 230, 0);
+    text-shadow: 0 0 5px rgba(255, 230, 200, 0.1);
+  }
+  50% {
+    opacity: 0.6;
+    color: rgba(255, 245, 230, 0.8);
+    text-shadow: 0 0 15px rgba(255, 230, 200, 0.4);
+  }
+  100% {
+    opacity: 1;
+    color: rgba(255, 245, 230, 0.9);
+    text-shadow: 0 0 30px rgba(255, 230, 200, 0.6);
+  }
+}
