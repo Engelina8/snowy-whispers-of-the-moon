@@ -119,4 +119,24 @@
     phaseBadge.textContent = `${phase.symbol} ${phase.name}`;
     document.body.appendChild(phaseBadge);
   }
-})();
+    // Centralized snowflake creation (used by all pages)
+    function createSnowflakes(numSnowflakes = 40) {
+      for (let i = 0; i < numSnowflakes; i++) {
+        const snowflake = document.createElement("div");
+        snowflake.classList.add("snowflake");
+        const size = Math.random() * 5 + 2;
+        snowflake.style.width = `${size}px`;
+        snowflake.style.height = `${size}px`;
+        snowflake.style.left = `${Math.random() * 100}vw`;
+        snowflake.style.animationDuration = `${5 + Math.random() * 10}s`;
+        snowflake.style.animationDelay = `${Math.random() * 5}s`;
+        snowflake.style.opacity = Math.random() * 0.8 + 0.2;
+        snowflake.style.animationTimingFunction = "linear";
+        document.body.appendChild(snowflake);
+      }
+    }
+
+    // Create the default snowflakes once
+    createSnowflakes(40);
+
+  })();

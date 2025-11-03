@@ -117,23 +117,7 @@
   <script src="background.js"></script>
   <script src="moon.js"></script>
 
-  <script>
-  // Add gentle snowfall
-  const numSnowflakes = 40;
-  for (let i = 0; i < numSnowflakes; i++) {
-    const snowflake = document.createElement("div");
-    snowflake.classList.add("snowflake");
-    const size = Math.random() * 5 + 2;
-    snowflake.style.width = `${size}px`;
-    snowflake.style.height = `${size}px`;
-    snowflake.style.left = `${Math.random() * 100}vw`;
-    snowflake.style.animationDuration = `${5 + Math.random() * 10}s`;
-    snowflake.style.animationDelay = `${Math.random() * 5}s`;
-    document.body.appendChild(snowflake);
-  }
-  </script>
-
-  <script src="background.js"></script>
+  <!-- snowflakes created centrally in background.js -->
 
 </body>
 </html>

@@ -1,4 +1,5 @@
-// 🌙 Snowy Whispers of the Moon — Main Logic
+// Archived copy of main.js — moved from project root
+// 🌙 Snowy Whispers of the Moon — Main Logic (archived)
 
 document.addEventListener("DOMContentLoaded", async () => {
   const urlParams = new URLSearchParams(window.location.search);
