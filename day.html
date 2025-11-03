@@ -31,6 +31,9 @@
   <!-- Load scripts in correct order -->
   <script src="days.js"></script>
   <script src="background.js"></script>
+  <!-- Markdown renderer and sanitizer for story files -->
+  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/dompurify@2.4.0/dist/purify.min.js"></script>
   
   <script>
     document.addEventListener('DOMContentLoaded', function() {
@@ -66,37 +69,69 @@
         if (riddle) riddle.textContent = "The page seems lost in the snow.";
       }
 
-      // Reveal system
-      const revealBtn = document.getElementById('reveal-btn');
-      const feedback = document.getElementById('feedback');
-      const answerInput = document.getElementById('answer');
+        // Reveal system with lazy-loading stories (markdown)
+        const revealBtn = document.getElementById('reveal-btn');
+        const feedback = document.getElementById('feedback');
+        const answerInput = document.getElementById('answer');
 
-      if (revealBtn && feedback && answerInput) {
-        revealBtn.addEventListener('click', () => {
-          const answer = answerInput.value.trim().toLowerCase();
-          const correctAnswer = (dayData && dayData.answer ? dayData.answer : "").toLowerCase();
+        // Simple in-memory cache for fetched stories
+        const storyCache = {};
 
-          if (answer === correctAnswer) {
-            story.style.display = 'block';
-            feedback.textContent = "✨ The whisper reveals itself...";
-            feedback.style.color = "#cfe3ff";
-            document.body.classList.add("revealed");
-            
-            // Show final message only on day 31 after riddle is solved
-            if (currentDay === 31) {
-              setTimeout(() => {
-                const message = document.createElement("div");
-                message.classList.add("final-message");
-                message.textContent = "for you — always";
-                document.body.appendChild(message);
-              }, 2000); // Wait 2 seconds after revealing the story
+        if (revealBtn && feedback && answerInput) {
+          revealBtn.addEventListener('click', async () => {
+            const answer = answerInput.value.trim().toLowerCase();
+            const correctAnswer = (dayData && dayData.answer ? dayData.answer : "").toLowerCase();
+
+            if (answer === correctAnswer) {
+              feedback.textContent = "✨ The whisper reveals itself...";
+              feedback.style.color = "#cfe3ff";
+              document.body.classList.add("revealed");
+
+              // Load story text (either inline or from a file)
+              try {
+                let html = '';
+                if (dayData.story) {
+                  // legacy inline story: escape and wrap
+                  html = `<p>${DOMPurify.sanitize(marked.parse(dayData.story))}</p>`;
+                } else if (dayData.storyFile) {
+                  const key = dayData.storyFile;
+                  if (storyCache[key]) {
+                    html = storyCache[key];
+                  } else {
+                    const res = await fetch(dayData.storyFile);
+                    const txt = await res.text();
+                    // Use marked to parse markdown, then sanitize output
+                    html = DOMPurify.sanitize(marked.parse(txt));
+                    storyCache[key] = html;
+                  }
+                }
+
+                if (html) {
+                  story.innerHTML = html;
+                  story.style.display = 'block';
+                }
+
+                // Show final message only on day 31 after riddle is solved
+                if (currentDay === 31) {
+                  setTimeout(() => {
+                    const message = document.createElement("div");
+                    message.classList.add("final-message");
+                    message.textContent = "for you — always";
+                    document.body.appendChild(message);
+                  }, 2000); // Wait 2 seconds after revealing the story
+                }
+              } catch (err) {
+                console.error('Failed to load story:', err);
+                feedback.textContent = "Could not load the story right now.";
+                feedback.style.color = "#ffb3b3";
+              }
+
+            } else {
+              feedback.textContent = "That doesn't sound quite right...";
+              feedback.style.color = "#ffb3b3";
             }
-          } else {
-            feedback.textContent = "That doesn't sound quite right...";
-            feedback.style.color = "#ffb3b3";
-          }
-        });
-      }
+          });
+        }
 
       // Snowflakes are created centrally in background.js
     });
