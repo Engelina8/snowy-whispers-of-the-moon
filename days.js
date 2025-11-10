@@ -9,7 +9,7 @@ const days = [
       phase: "🌑"
     },
     {
-      title: "Frozen Breath",
+      title: "Frozen Words",
       riddle: "I vanish as you speak, yet I echo in the cold — what am I?",
       answer: "breath",
         storyFile: "stories/02.md",
