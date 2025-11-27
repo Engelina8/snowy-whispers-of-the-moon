@@ -8,6 +8,24 @@
     currentDay = new Date().getDate();
   }
 
+  // Date-gating: Check if the requested day is available based on calendar date
+  // Only gate on day.html pages (when ?day= parameter exists)
+  if (params.has("day")) {
+    const today = new Date();
+    const currentMonth = today.getMonth(); // 0-11 (December = 11)
+    const currentDate = today.getDate(); // 1-31
+    
+    // Only enforce gating in December
+    if (currentMonth === 11) {
+      if (currentDay > currentDate) {
+        // Redirect to calendar if trying to access a future day
+        window.location.href = "calendar.html";
+        return;
+      }
+    }
+    // Outside December, allow all days (for testing/viewing)
+  }
+
   // Define visual phases
   const phases = [
     {
@@ -112,6 +130,55 @@
     // Day 31 message will be triggered from day.html when riddle is solved
   }
 
+  // 🎂 Special birthday effect for Day 29
+  if (currentDay === 29 && params.has("day")) {
+    // Add birthday confetti
+    for (let i = 0; i < 30; i++) {
+      const confetti = document.createElement("div");
+      confetti.classList.add("confetti");
+      confetti.style.left = `${Math.random() * 100}vw`;
+      confetti.style.animationDelay = `${Math.random() * 3}s`;
+      confetti.style.background = `hsl(${Math.random() * 360}, 70%, 60%)`;
+      document.body.appendChild(confetti);
+    }
+    // Add birthday badge
+    const birthdayBadge = document.createElement("div");
+    birthdayBadge.classList.add("birthday-badge");
+    birthdayBadge.innerHTML = "🎉 Happy Birthday! 🎂";
+    document.body.appendChild(birthdayBadge);
+  }
+
+  // ❤️ Static heart-shaped snowflakes for Day 31
+  if (currentDay === 31 && params.has("day")) {
+    const heartPositions = [
+      // Top curve left
+      { x: 35, y: 30 }, { x: 38, y: 28 }, { x: 41, y: 27 }, { x: 44, y: 26 },
+      // Top curve right
+      { x: 56, y: 26 }, { x: 59, y: 27 }, { x: 62, y: 28 }, { x: 65, y: 30 },
+      // Middle fill
+      { x: 47, y: 29 }, { x: 50, y: 28 }, { x: 53, y: 29 },
+      { x: 40, y: 33 }, { x: 43, y: 32 }, { x: 46, y: 31 }, { x: 50, y: 31 },
+      { x: 54, y: 31 }, { x: 57, y: 32 }, { x: 60, y: 33 },
+      // Lower body
+      { x: 42, y: 37 }, { x: 45, y: 36 }, { x: 48, y: 35 }, { x: 50, y: 35 },
+      { x: 52, y: 35 }, { x: 55, y: 36 }, { x: 58, y: 37 },
+      { x: 44, y: 41 }, { x: 47, y: 40 }, { x: 50, y: 39 }, { x: 53, y: 40 }, { x: 56, y: 41 },
+      { x: 46, y: 45 }, { x: 48, y: 44 }, { x: 50, y: 43 }, { x: 52, y: 44 }, { x: 54, y: 45 },
+      { x: 48, y: 49 }, { x: 50, y: 48 }, { x: 52, y: 49 },
+      // Point
+      { x: 50, y: 53 }
+    ];
+
+    heartPositions.forEach((pos, index) => {
+      const heartFlake = document.createElement("div");
+      heartFlake.classList.add("heart-snowflake");
+      heartFlake.style.left = `${pos.x}vw`;
+      heartFlake.style.top = `${pos.y}vh`;
+      heartFlake.style.animationDelay = `${index * 0.05}s`;
+      document.body.appendChild(heartFlake);
+    });
+  }
+
   // 🌙 Inject phase indicator on day.html only
   if (params.has("day")) {
     const phaseBadge = document.createElement("div");
@@ -136,7 +203,8 @@
       }
     }
 
-    // Create the default snowflakes once
-    createSnowflakes(40);
+    // Create the default snowflakes once (fewer on day 31 to show heart)
+    const snowflakeCount = (currentDay === 31 && params.has("day")) ? 15 : 40;
+    createSnowflakes(snowflakeCount);
 
   })();
