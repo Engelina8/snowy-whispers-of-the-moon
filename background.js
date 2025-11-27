@@ -154,12 +154,39 @@
     heartOutline.classList.add("heart-outline");
     heartOutline.innerHTML = `
       <svg width="400" height="400" viewBox="0 0 400 400" xmlns="http://www.w3.org/2000/svg">
-        <path d="M200,50 C200,50 350,150 350,250 C350,300 300,350 200,300 C100,350 50,300 50,250 C50,150 200,50 200,50 Z"
-              fill="none"
-              stroke="rgba(255, 180, 200, 0.7)"
-              stroke-width="8"
-              stroke-linecap="round"
-              stroke-linejoin="round"/>
+        <g transform="translate(200,200)">
+          <path d="M0,100 L-10,90 L-20,75 L-30,55 L-40,30 L-45,10 L-50,-10 L-45,-30 L-40,-50 L-30,-70 L-20,-85 L-10,-95 L0,-100 L10,-95 L20,-85 L30,-70 L40,-50 L45,-30 L50,-10 L45,10 L40,30 L30,55 L20,75 L10,90 Z"
+                fill="none"
+                stroke="rgba(255, 180, 200, 0.7)"
+                stroke-width="6"
+                stroke-linecap="round"
+                stroke-linejoin="round"/>
+          <!-- Points markers -->
+          <circle cx="0" cy="100" r="3" fill="rgba(255, 180, 200, 0.7)"/>
+          <circle cx="-10" cy="90" r="3" fill="rgba(255, 180, 200, 0.7)"/>
+          <circle cx="-20" cy="75" r="3" fill="rgba(255, 180, 200, 0.7)"/>
+          <circle cx="-30" cy="55" r="3" fill="rgba(255, 180, 200, 0.7)"/>
+          <circle cx="-40" cy="30" r="3" fill="rgba(255, 180, 200, 0.7)"/>
+          <circle cx="-45" cy="10" r="3" fill="rgba(255, 180, 200, 0.7)"/>
+          <circle cx="-50" cy="-10" r="3" fill="rgba(255, 180, 200, 0.7)"/>
+          <circle cx="-45" cy="-30" r="3" fill="rgba(255, 180, 200, 0.7)"/>
+          <circle cx="-40" cy="-50" r="3" fill="rgba(255, 180, 200, 0.7)"/>
+          <circle cx="-30" cy="-70" r="3" fill="rgba(255, 180, 200, 0.7)"/>
+          <circle cx="-20" cy="-85" r="3" fill="rgba(255, 180, 200, 0.7)"/>
+          <circle cx="-10" cy="-95" r="3" fill="rgba(255, 180, 200, 0.7)"/>
+          <circle cx="0" cy="-100" r="3" fill="rgba(255, 180, 200, 0.7)"/>
+          <circle cx="10" cy="-95" r="3" fill="rgba(255, 180, 200, 0.7)"/>
+          <circle cx="20" cy="-85" r="3" fill="rgba(255, 180, 200, 0.7)"/>
+          <circle cx="30" cy="-70" r="3" fill="rgba(255, 180, 200, 0.7)"/>
+          <circle cx="40" cy="-50" r="3" fill="rgba(255, 180, 200, 0.7)"/>
+          <circle cx="45" cy="-30" r="3" fill="rgba(255, 180, 200, 0.7)"/>
+          <circle cx="50" cy="-10" r="3" fill="rgba(255, 180, 200, 0.7)"/>
+          <circle cx="45" cy="10" r="3" fill="rgba(255, 180, 200, 0.7)"/>
+          <circle cx="40" cy="30" r="3" fill="rgba(255, 180, 200, 0.7)"/>
+          <circle cx="30" cy="55" r="3" fill="rgba(255, 180, 200, 0.7)"/>
+          <circle cx="20" cy="75" r="3" fill="rgba(255, 180, 200, 0.7)"/>
+          <circle cx="10" cy="90" r="3" fill="rgba(255, 180, 200, 0.7)"/>
+        </g>
       </svg>
     `;
     document.body.appendChild(heartOutline);
