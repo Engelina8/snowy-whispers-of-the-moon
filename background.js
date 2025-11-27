@@ -148,35 +148,11 @@
     document.body.appendChild(birthdayBadge);
   }
 
-  // ❤️ Static heart-shaped snowflakes for Day 31
+  // ❤️ Heart outline background for Day 31
   if (currentDay === 31 && params.has("day")) {
-    const heartPositions = [
-      // Top curve left
-      { x: 35, y: 30 }, { x: 38, y: 28 }, { x: 41, y: 27 }, { x: 44, y: 26 },
-      // Top curve right
-      { x: 56, y: 26 }, { x: 59, y: 27 }, { x: 62, y: 28 }, { x: 65, y: 30 },
-      // Middle fill
-      { x: 47, y: 29 }, { x: 50, y: 28 }, { x: 53, y: 29 },
-      { x: 40, y: 33 }, { x: 43, y: 32 }, { x: 46, y: 31 }, { x: 50, y: 31 },
-      { x: 54, y: 31 }, { x: 57, y: 32 }, { x: 60, y: 33 },
-      // Lower body
-      { x: 42, y: 37 }, { x: 45, y: 36 }, { x: 48, y: 35 }, { x: 50, y: 35 },
-      { x: 52, y: 35 }, { x: 55, y: 36 }, { x: 58, y: 37 },
-      { x: 44, y: 41 }, { x: 47, y: 40 }, { x: 50, y: 39 }, { x: 53, y: 40 }, { x: 56, y: 41 },
-      { x: 46, y: 45 }, { x: 48, y: 44 }, { x: 50, y: 43 }, { x: 52, y: 44 }, { x: 54, y: 45 },
-      { x: 48, y: 49 }, { x: 50, y: 48 }, { x: 52, y: 49 },
-      // Point
-      { x: 50, y: 53 }
-    ];
-
-    heartPositions.forEach((pos, index) => {
-      const heartFlake = document.createElement("div");
-      heartFlake.classList.add("heart-snowflake");
-      heartFlake.style.left = `${pos.x}vw`;
-      heartFlake.style.top = `${pos.y}vh`;
-      heartFlake.style.animationDelay = `${index * 0.05}s`;
-      document.body.appendChild(heartFlake);
-    });
+    const heartOutline = document.createElement("div");
+    heartOutline.classList.add("heart-outline");
+    document.body.appendChild(heartOutline);
   }
 
   // 🌙 Inject phase indicator on day.html only
@@ -203,8 +179,7 @@
       }
     }
 
-    // Create the default snowflakes once (fewer on day 31 to show heart)
-    const snowflakeCount = (currentDay === 31 && params.has("day")) ? 15 : 40;
-    createSnowflakes(snowflakeCount);
+    // Create the default snowflakes once
+    createSnowflakes(40);
 
   })();
