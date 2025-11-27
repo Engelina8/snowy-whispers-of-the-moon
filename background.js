@@ -152,41 +152,33 @@
   if (currentDay === 31 && params.has("day")) {
     const heartOutline = document.createElement("div");
     heartOutline.classList.add("heart-outline");
+    // Generate heart using parametric equations: x = 16sin³(t), y = 13cos(t) - 5cos(2t) - 2cos(3t) - cos(4t)
+    const heartPoints = [];
+    const scale = 8;
+    for (let t = 0; t <= Math.PI * 2; t += 0.1) {
+      const x = scale * 16 * Math.pow(Math.sin(t), 3);
+      const y = -scale * (13 * Math.cos(t) - 5 * Math.cos(2 * t) - 2 * Math.cos(3 * t) - Math.cos(4 * t));
+      heartPoints.push(`${x},${y}`);
+    }
+    
     heartOutline.innerHTML = `
-      <svg width="400" height="400" viewBox="0 0 400 400" xmlns="http://www.w3.org/2000/svg">
-        <g transform="translate(200,200)">
-          <path d="M0,100 L-10,90 L-20,75 L-30,55 L-40,30 L-45,10 L-50,-10 L-45,-30 L-40,-50 L-30,-70 L-20,-85 L-10,-95 L0,-100 L10,-95 L20,-85 L30,-70 L40,-50 L45,-30 L50,-10 L45,10 L40,30 L30,55 L20,75 L10,90 Z"
-                fill="none"
-                stroke="rgba(255, 180, 200, 0.7)"
-                stroke-width="6"
-                stroke-linecap="round"
-                stroke-linejoin="round"/>
-          <!-- Points markers -->
-          <circle cx="0" cy="100" r="3" fill="rgba(255, 180, 200, 0.7)"/>
-          <circle cx="-10" cy="90" r="3" fill="rgba(255, 180, 200, 0.7)"/>
-          <circle cx="-20" cy="75" r="3" fill="rgba(255, 180, 200, 0.7)"/>
-          <circle cx="-30" cy="55" r="3" fill="rgba(255, 180, 200, 0.7)"/>
-          <circle cx="-40" cy="30" r="3" fill="rgba(255, 180, 200, 0.7)"/>
-          <circle cx="-45" cy="10" r="3" fill="rgba(255, 180, 200, 0.7)"/>
-          <circle cx="-50" cy="-10" r="3" fill="rgba(255, 180, 200, 0.7)"/>
-          <circle cx="-45" cy="-30" r="3" fill="rgba(255, 180, 200, 0.7)"/>
-          <circle cx="-40" cy="-50" r="3" fill="rgba(255, 180, 200, 0.7)"/>
-          <circle cx="-30" cy="-70" r="3" fill="rgba(255, 180, 200, 0.7)"/>
-          <circle cx="-20" cy="-85" r="3" fill="rgba(255, 180, 200, 0.7)"/>
-          <circle cx="-10" cy="-95" r="3" fill="rgba(255, 180, 200, 0.7)"/>
-          <circle cx="0" cy="-100" r="3" fill="rgba(255, 180, 200, 0.7)"/>
-          <circle cx="10" cy="-95" r="3" fill="rgba(255, 180, 200, 0.7)"/>
-          <circle cx="20" cy="-85" r="3" fill="rgba(255, 180, 200, 0.7)"/>
-          <circle cx="30" cy="-70" r="3" fill="rgba(255, 180, 200, 0.7)"/>
-          <circle cx="40" cy="-50" r="3" fill="rgba(255, 180, 200, 0.7)"/>
-          <circle cx="45" cy="-30" r="3" fill="rgba(255, 180, 200, 0.7)"/>
-          <circle cx="50" cy="-10" r="3" fill="rgba(255, 180, 200, 0.7)"/>
-          <circle cx="45" cy="10" r="3" fill="rgba(255, 180, 200, 0.7)"/>
-          <circle cx="40" cy="30" r="3" fill="rgba(255, 180, 200, 0.7)"/>
-          <circle cx="30" cy="55" r="3" fill="rgba(255, 180, 200, 0.7)"/>
-          <circle cx="20" cy="75" r="3" fill="rgba(255, 180, 200, 0.7)"/>
-          <circle cx="10" cy="90" r="3" fill="rgba(255, 180, 200, 0.7)"/>
-        </g>
+      <svg width="400" height="400" viewBox="-200 -200 400 400" xmlns="http://www.w3.org/2000/svg">
+        <polyline points="${heartPoints.join(' ')}"
+                  fill="none"
+                  stroke="rgba(255, 180, 200, 0.7)"
+                  stroke-width="6"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  filter="url(#glow)"/>
+        <defs>
+          <filter id="glow">
+            <feGaussianBlur stdDeviation="3" result="coloredBlur"/>
+            <feMerge>
+              <feMergeNode in="coloredBlur"/>
+              <feMergeNode in="SourceGraphic"/>
+            </feMerge>
+          </filter>
+        </defs>
       </svg>
     `;
     document.body.appendChild(heartOutline);
