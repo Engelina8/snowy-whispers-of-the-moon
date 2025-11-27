@@ -154,7 +154,7 @@
     heartOutline.classList.add("heart-outline");
     heartOutline.innerHTML = `
       <svg width="400" height="400" viewBox="0 0 400 400" xmlns="http://www.w3.org/2000/svg">
-        <path d="M200,350 C200,350 50,250 50,150 C50,100 100,50 200,100 C300,50 350,100 350,150 C350,250 200,350 200,350 Z"
+        <path d="M200,50 C200,50 350,150 350,250 C350,300 300,350 200,300 C100,350 50,300 50,250 C50,150 200,50 200,50 Z"
               fill="none"
               stroke="rgba(255, 180, 200, 0.7)"
               stroke-width="8"
