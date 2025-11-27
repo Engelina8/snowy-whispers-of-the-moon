@@ -152,6 +152,16 @@
   if (currentDay === 31 && params.has("day")) {
     const heartOutline = document.createElement("div");
     heartOutline.classList.add("heart-outline");
+    heartOutline.innerHTML = `
+      <svg width="400" height="400" viewBox="0 0 400 400" xmlns="http://www.w3.org/2000/svg">
+        <path d="M200,350 C200,350 50,250 50,150 C50,100 100,50 200,100 C300,50 350,100 350,150 C350,250 200,350 200,350 Z"
+              fill="none"
+              stroke="rgba(255, 180, 200, 0.7)"
+              stroke-width="8"
+              stroke-linecap="round"
+              stroke-linejoin="round"/>
+      </svg>
+    `;
     document.body.appendChild(heartOutline);
   }
 
